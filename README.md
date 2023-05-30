@@ -11,22 +11,21 @@ path-planning routes, etc.
 Unlike fixed robots connected via a wired connection where the bandwidth and latency are fairly constant,
 the bandwidth and latency on a WiFi between the mobile robot and a developer's workstation can vary considerably
 and often unpredictably as a function of the robot and the developer's relative positions.
-This shouldn't be a issue however, as a momentary drop in signal should only impact the developer's live data display, and not impede the robot's task.
+This shouldn't be a issue however, as the developer's view of the robot's own perspective on the world is sublemental to the robot's operation - not critical.
 This is what the ROS2 topic reliability policies were designed for, a reliable subscription policy that can be used for mission-critical connections,
-possibly internal to the robot, and a "best_effort" subscription policy for non-critical telemetry and other monitoring.
+possibly internal to the robot, and a "best_effort" subscription policy for non-critical monitoring and debugging.
 
-![ROS2 WiFi RViz](https://github.com/ciandonovan/ros2_qos_reliability/assets/94260580/ee3870b3-62d4-4abe-9760-37d2b6d9022e)
-![ROS2 Cellular](https://github.com/ciandonovan/ros2_qos_reliability/assets/94260580/9c35d212-edc2-448c-af4d-5f1399d1077f)
+![ROS2 used over WiFi and Cellular for monitoring](https://github.com/ciandonovan/ros2_qos_reliability/assets/94260580/209ff516-d868-4164-9c77-fbddb73ac407)
 
 As will be demonstrated however, there is seemingly no functional difference between the two policies - both act as a reliable subscriber,
 meaning that the publisher will throttle its publishing rate if the subscriber can't keep up,
 which is often the case for high-bandwidth topics over a wireless connection.
 
-For us this often causes our robot to grind to a halt if we're trying to debug the robot using RViz and we loose line of sight.
+For us this often causes our robot to grind to a halt if we're trying to debug the robot's navigation using RViz and we loose line of sight.
 Loss of data on the developer side is unavoidable in this scenario,
 but it absolutely should not be the case that the robot is in any way impacted by there external factors.
 
-The reproducible demo uses containers to simulate two remote hosts for convenience,
+The reproducible demo for conveniences  uses containers to simulate two remote hosts for convenience,
 but I've also reproduced this issue outside of containers between two remote hosts,
 and that both the FastDDS and Cyclone Iceyorx shared-memory implementations are also affected by slow remote subscribers.
 
