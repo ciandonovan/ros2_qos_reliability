@@ -11,7 +11,7 @@ path-planning routes, etc.
 Unlike fixed robots connected via a wired connection where the bandwidth and latency are fairly constant,
 the bandwidth and latency on a WiFi between the mobile robot and a developer's workstation can vary considerably
 and often unpredictably as a function of the robot and the developer's relative positions.
-This shouldn't be a issue however, as the developer's view of the robot's own perspective on the world is supplemental to the robot's operation - not critical.
+This shouldn't be a issue, as the developer's view of the robot's own perspective on the world is supplemental to the robot's operation - not critical.
 This is what the ROS2 topic reliability policies were designed for, a reliable subscription policy that can be used for mission-critical connections,
 possibly internal to the robot, and a "best_effort" subscription policy that can be used for non-critical monitoring and debugging.
 
