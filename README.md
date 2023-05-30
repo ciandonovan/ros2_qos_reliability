@@ -29,25 +29,13 @@ N.B. use `sudo iftop -i lo` to monitor loopback traffic in real-time.
 ## Run camera publisher
 
 ```
-podman run --rm -it --name ros2_publisher --net=host --device=/dev/video0:/dev/video0:rw --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 run v4l2_camera v4l2_camera_node
-```
-
-## Monitor camera publishing rate
-
-```
-podman exec -it --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_publisher /ros_entrypoint.sh ros2 topic hz /image_raw
-```
-
-## Subscribe reliably
-
-```
-podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 topic echo --qos-reliability reliable /image_raw
+podman run --rm -it --name ros2_publisher --net=host --device=/dev/video0:/dev/video0:rw --env RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 run v4l2_camera v4l2_camera_node --ros-args --log-level debug
 ```
 
 ## Subscribe best effort
 
 ```
-podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 topic echo --qos-reliability best_effort /image_raw
+podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 topic echo --qos-reliability best_effort /image_raw
 ```
 
 # Analysis
