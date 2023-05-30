@@ -30,7 +30,7 @@ For us this often causes our robot to grind to a halt if we're trying to debug t
 This could be alleviated by only using ROS2 DDS for internal communication on the host, and a ROS bridge to external devices.
 But if that's required, then what's the benefit of DDS at all?
 
-Better WiFi coverage and higher bandwidth APs could also alleviated the issue somewhat, but still offers no guarantees, but principally it should never have an effect at all - such non-determinism is a non-starter in many industrial applications.
+Better WiFi coverage and higher bandwidth APs could also alleviated the issue somewhat, but still offers no guarantees, and in principle should not have an effect at all - such non-determinism is a non-starter in many industrial applications.
 
 ## Reproduction
 
