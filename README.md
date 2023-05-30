@@ -78,7 +78,7 @@ Delete tc qdisc on the loopback when finished.
 
 ## Actual behaviour
 
-The "reliable" subscription behaves as expected, the publisher throttles its publishing rate so until the point where all subscribers can receive all published messages given the bandwidth. This can be seen by observing the publishers debug messages.
+The "reliable" subscription behaves as expected, the publisher throttles its publishing rate so until the point where all subscribers can receive all published messages given the bandwidth. This can be seen by observing the publisher's debug messages.
 
 However, this is also the case for the "best_effort" subscription!
 
