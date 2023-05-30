@@ -1,12 +1,12 @@
 # Prerequisites
 
-Podman installed and webcam at `/dev/video0`
+Laptop with webcam at `/dev/video0` and Podman installed.
 
 # Download and build
 
 ```
 git clone https://github.com/ciandonovan/ros2_publish_rate.git
-cd ros2_publish_rate
+cd ros2_qos_reliability
 podman build -t $(basename $PWD) .
 ```
 
@@ -18,18 +18,18 @@ Each of the following commands should be run in seperate containers.
 
 Simulate a constained network such as WiFi but on the loopback interface.
 
-`sudo tc qdisc add dev lo root tbf rate 100mbit burst 100mbit latency 50ms`
+`sudo tc qdisc add dev lo root tbf rate 10mbit burst 10mbit latency 50ms`
 
 Delete qdisc on the loopback when finished.
 
-`sudo tc qdisc del dev lo root tbf rate 100mbit burst 100mbit latency 50ms`
+`sudo tc qdisc del dev lo root`
 
 N.B. use `sudo iftop -i lo` to monitor loopback traffic in real-time.
 
 ## Run camera publisher
 
 ```
-podman run --rm -it --name ros2_publisher --net=host --device=/dev/video0:/dev/video0:rw --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_publish_rate:latest ros2 run v4l2_camera v4l2_camera_node
+podman run --rm -it --name ros2_publisher --net=host --device=/dev/video0:/dev/video0:rw --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 run v4l2_camera v4l2_camera_node
 ```
 
 ## Monitor camera publishing rate
@@ -41,13 +41,13 @@ podman exec -it --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_publisher /ros
 ## Subscribe reliably
 
 ```
-podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_publish_rate:latest ros2 topic echo --qos-reliability reliable /image_raw
+podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 topic echo --qos-reliability reliable /image_raw
 ```
 
 ## Subscribe best effort
 
 ```
-podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_publish_rate:latest ros2 topic echo --qos-reliability best_effort /image_raw
+podman run --rm -it --name ros2_subscriber --net=host --env RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION ros2_qos_reliability:latest ros2 topic echo --qos-reliability best_effort /image_raw
 ```
 
 # Analysis
