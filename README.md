@@ -15,6 +15,9 @@ This shouldn't be a issue however, as a momentary drop in signal should only imp
 This is what the ROS2 topic reliability policies were designed for, a reliable subscription policy that can be used for mission-critical connections,
 possibly internal to the robot, and a "best_effort" subscription policy for non-critical telemetry and other monitoring.
 
+![ROS2 WiFi RViz](https://github.com/ciandonovan/ros2_qos_reliability/assets/94260580/0b6e214d-2772-4c16-8cc9-b68e960ea63d)
+![ROS2 Cellular](https://github.com/ciandonovan/ros2_qos_reliability/assets/94260580/9c35d212-edc2-448c-af4d-5f1399d1077f)
+
 As will be demonstrated however, there is seemingly no functional difference between the two policies - both act as a reliable subscriber,
 meaning that the publisher will throttle its publishing rate if the subscriber can't keep up,
 which is often the case for high-bandwidth topics over a wireless connection.
