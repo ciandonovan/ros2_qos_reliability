@@ -1,6 +1,6 @@
 # ROS2 QoS Reliability Non-Functional
 
-tl;dr: using tools such as RViz over WiFi can cause a robot to stall, even when all topics are subscribed using the "best_effort" policy - seemingly it's functionally equivalent to the "reliable" policy...
+tl;dr: using tools such as RViz over WiFi can cause a robot to stall, even when all topics are subscribed using the "best_effort" policy - seemingly it's functionally equivalent to the "reliable" policy
 
 ## Introduction
 
@@ -23,12 +23,12 @@ As will be demonstrated however, there is seemingly no functional difference bet
 meaning that the publisher will throttle its publishing rate if the subscriber can't keep up,
 which is often the case for high-bandwidth topics over a wireless connection.
 
-This means that for mobile robots, where engineers use tools such as RViz monitoring topics over a WiFi link, should that link degrade, the _internal_ communication on the robot also degrades, even when using shared memory!
+This means that for mobile robots, where engineers use tools such as RViz monitoring topics over a WiFi link, should that link degrade, the _internal_ communication on the robot also degrades, even when using shared memory.
 As such, the behaviour of the robot as a whole under test, and in the field, could be drastically different.
 
 For us this often causes our robot to grind to a halt if we're trying to debug the robot's navigation using RViz and we loose line of sight.
 This could be alleviated by only using ROS2 DDS for internal communication on the host, and a ROS bridge to external devices.
-But if that's required, then what's the benefit of DDS at all?
+But then the benefits of using DDS are lost.
 
 Better WiFi coverage and higher bandwidth APs could also alleviated the issue somewhat, but still offers no guarantees, and in principle should not have an effect at all - such non-determinism is a non-starter in many industrial applications.
 
@@ -76,20 +76,8 @@ Delete tc qdisc on the loopback when finished.
 
 `sudo tc qdisc del dev lo root`
 
-## Actual behaviour
+## Comments
 
 The "reliable" subscription behaves as expected, the publisher throttles its publishing rate so until the point where all subscribers can receive all published messages given the bandwidth. This can be seen by observing the publisher's debug messages.
 
-However, this is also the case for the "best_effort" subscription!
-
-## Comments
-
-It is possible that I've missed something and that some tweak can already be made somewhere to fix this issue.
-
-Even if so, this is not something obvious or documented to my knowledge.
-
-I've spent a long time trying to resolve this issue,
-and I can only imagine that many beginners would have just moved on or given up altogether,
-thinking that they've done something simple wrong.
-
-ROS2 still has a long way to go to work out-of-the-box as expected.
+However, this is also the case for the "best_effort" subscription.
