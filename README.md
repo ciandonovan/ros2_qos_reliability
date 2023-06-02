@@ -1,4 +1,4 @@
-# ROS2 QoS Reliability Non-Functional
+# ROS2 QoS Reliability Issue
 
 tl;dr: using tools such as RViz over WiFi can cause a robot to stall, even when all topics are subscribed using the "best_effort" policy - seemingly it's functionally equivalent to the "reliable" policy
 
@@ -45,7 +45,7 @@ Webcam at `/dev/video0` and Podman installed.
 ### Download and build
 
 ```
-git clone https://github.com/ciandonovan/ros2_publish_rate.git
+git clone https://github.com/ciandonovan/ros2_qos_reliability.git
 cd ros2_qos_reliability
 podman build -t $(basename $PWD) .
 ```
